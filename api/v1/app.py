@@ -1,28 +1,36 @@
 #!/usr/bin/python3
-""" Script that imports a Blueprint and runs Flask """
-from flask import Flask, make_response, jsonify
-import storage from models
-import app_views from api.v1.views
+"""
+Module app
+"""
+from api.v1.views import app_views
+from flasgger import Swagger
+from flask import (Blueprint, Flask, jsonify, make_response)
+from flask_cors import (CORS, cross_origin)
+from models import storage
+from os import getenv
 
 
 app = Flask(__name__)
+CORS(app, origins="0.0.0.0")
 app.register_blueprint(app_views)
+Swagger(app)
 
-
-@app.teardown_appcontext
-def teardown_session(exception):
-    """ Closes storage session """
-    storage.close()
-
-if __name__ == '__main__':
-    HBNB_API_HOST = getenv('HBNB_API_HOST')
-    HBNB_API_PORT = getenv('HBNB_API_PORT')
-
-    host = '0.0.0.0' if not HBNB_API_HOST else HBNB_API_HOST
-    port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
-    app.run(host=host, port=port, threaded=True)
 
 @app.errorhandler(404)
 def not_found(error):
-    """ Returns JSON response with 404 status """
+    """json 404 page"""
     return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app.teardown_appcontext
+def teardown(exception):
+    """ closes the session """
+    storage.close()
+
+
+if __name__ == "__main__":
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", "5000")
+#    print(app.url_map)
+    app.run(host=host, port=port)
+
