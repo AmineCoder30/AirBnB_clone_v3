@@ -1,72 +1,73 @@
 #!/usr/bin/python3
-"""
-This is module users
-"""
-from api.v1.views import (app_views, User, storage)
-from flask import (abort, jsonify, make_response, request)
+""" View for User objects that handles default API actions """
+from api.v1.views import app_views
+from flask import jsonify, abort, make_response, request
+from models import storage
+from models.user import User
+import hashlib
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
+def users():
+    """ Retrieves the list of all User objects """
+    d_users = storage.all(User)
+    return jsonify([obj.to_dict() for obj in d_users.values()])
+
+
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
-def view_user(user_id=None):
-    """returning a list of all users or of one specified
-    Retrieves a list of all users or of one specified by user_id"""
-    if user_id is None:
-        all_users = [state.to_json() for state
-                     in storage.all("User").values()]
-        return jsonify(all_users)
-    s = storage.get("User", user_id)
-    if s is None:
-        abort(404)
-    return jsonify(s.to_json())
-
-
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
-def delete_user(user_id=None):
-    """deleting one user
-    Deletes a user based on the user_id"""
+def r_user_id(user_id):
+    """
+    file: yml/users_get.yml
+    """
     user = storage.get("User", user_id)
-    if user is None:
+    if not user:
         abort(404)
-    storage.delete(user)
-    return jsonify({}), 200
+    return jsonify(user.to_dict())
+
+
+@app_views.route('/users/<user_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def del_user(user_id):
+    """ Deletes a User object """
+    user = storage.get("User", user_id)
+    if not user:
+        abort(404)
+    user.delete()
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
-def create_user():
-    """creates a user
-    Creates a user based on the JSON body"""
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    if 'email' not in r.keys():
-        return "Missing email", 400
-    if 'password' not in r.keys():
-        return "Missing password", 400
-    s = User(**r)
-    s.save()
-    return jsonify(s.to_json()), 201
+def post_user():
+    """ Creates a User object """
+    new_user = request.get_json()
+    if not new_user:
+        abort(400, "Not a JSON")
+    if "email" not in new_user:
+        abort(400, "Missing email")
+    if "password" not in new_user:
+        abort(400, "Missing password")
+
+    user = User(**new_user)
+    storage.new(user)
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_user(user_id=None):
-    """updates a user
-    Updates a user based on the JSON body"""
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    a = storage.get("User", user_id)
-    if a is None:
+def put_user(user_id):
+    """ Updates a User object """
+    user = storage.get("User", user_id)
+    if not user:
         abort(404)
-    for k in ("id", "email", "created_at", "updated_at"):
-        r.pop(k, None)
-    for k, v in r.items():
-        setattr(a, k, v)
-    a.save()
-    return jsonify(a.to_json()), 200
+
+    body_request = request.get_json()
+    if not body_request:
+        abort(400, "Not a JSON")
+
+    for k, v in body_request.items():
+        if k not in ['id', 'email', 'created_at', 'updated_at']:
+            setattr(user, k, v)
+
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)
