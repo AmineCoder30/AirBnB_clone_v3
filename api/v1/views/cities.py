@@ -10,7 +10,30 @@ from models.city import City
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def cities(state_id):
-    """ Retrieves the list of all City objects """
+    """ Retrieves the list of all City objects
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     state = storage.get("State", state_id)
     if not state:
         abort(404)
@@ -19,7 +42,30 @@ def cities(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def r_city_id(city_id):
-    """ Retrieves a City object """
+    """ Retrieves a City object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     city = storage.get("City", city_id)
     if not city:
         abort(404)
@@ -41,7 +87,30 @@ def del_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def post_city(state_id):
-    """ Creates a City object """
+    """ Creates a City object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     state = storage.get("State", state_id)
     if not state:
         abort(404)
@@ -60,7 +129,30 @@ def post_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_city(city_id):
-    """ Updates a City object """
+    """ Updates a City object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     city = storage.get("City", city_id)
     if not city:
         abort(404)
