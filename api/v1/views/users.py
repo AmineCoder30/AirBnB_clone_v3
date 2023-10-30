@@ -9,7 +9,10 @@ import hashlib
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def users():
-    """ Retrieves the list of all User objects """
+    """ Retrieves the list of all User objects
+        definitions:
+        type: object
+    """
     d_users = storage.all(User)
     return jsonify([obj.to_dict() for obj in d_users.values()])
 
@@ -17,7 +20,14 @@ def users():
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def r_user_id(user_id):
     """
-    file: yml/users_get.yml
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+            items:
+              $ref: '#/definitions/Color'
     """
     user = storage.get("User", user_id)
     if not user:
@@ -28,7 +38,18 @@ def r_user_id(user_id):
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_user(user_id):
-    """ Deletes a User object """
+    """ Deletes a User object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'
+    """
     user = storage.get("User", user_id)
     if not user:
         abort(404)
