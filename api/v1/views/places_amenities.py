@@ -14,7 +14,30 @@ from os import getenv
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def places_amenities(place_id):
-    """ Retrieves the list of all Amenities objects in a Place"""
+    """ Retrieves the list of all Amenities objects in a Place
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -29,7 +52,30 @@ def places_amenities(place_id):
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def del_places_amenities(place_id, amenity_id):
-    """ Deletes an Amenity object """
+    """ Deletes an Amenity object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -56,7 +102,30 @@ def del_places_amenities(place_id, amenity_id):
                  methods=['POST'],
                  strict_slashes=False)
 def link_amenity_place(place_id, amenity_id):
-    """ Links an Amenity and a Place """
+    """ Links an Amenity and a Place
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
