@@ -13,7 +13,30 @@ from os import getenv
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def places(city_id):
-    """ Retrieves the list of all Place objects """
+    """ Retrieves the list of all Place objects
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     city = storage.get("City", city_id)
     if not city:
         abort(404)
@@ -22,7 +45,30 @@ def places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def r_place_id(place_id):
-    """ Retrieves a Place object """
+    """ Retrieves a Place object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -32,7 +78,30 @@ def r_place_id(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_place(place_id):
-    """ Deletes a Place object """
+    """ Deletes a Place object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -44,7 +113,30 @@ def del_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id):
-    """ Creates a Place object """
+    """ Creates a Place object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     city = storage.get("City", city_id)
     if not city:
         abort(404)
@@ -68,7 +160,30 @@ def post_place(city_id):
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_place(place_id):
-    """ Updates a Place object """
+    """ Updates a Place object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -92,6 +207,29 @@ def places_search():
     """
     Retrieves all Place objects depending of
     the JSON in the body of the request
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'
     """
     body_r = request.get_json()
     if body_r is None:
