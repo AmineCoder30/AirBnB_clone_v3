@@ -10,7 +10,30 @@ from models.review import Review
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def reviews(place_id):
-    """ Retrieves the list of all Review objects """
+    """ Retrieves the list of all Review objects
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -19,7 +42,30 @@ def reviews(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def r_review_id(review_id):
-    """ Retrieves a Review object """
+    """ Retrieves a Review object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     review = storage.get("Review", review_id)
     if not review:
         abort(404)
@@ -41,7 +87,30 @@ def del_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
-    """ Creates a Review object """
+    """ Creates a Review object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -65,7 +134,30 @@ def post_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_review(review_id):
-    """ Updates a Review object """
+    """ Updates a Review object
+        definitions:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'"""
     review = storage.get("Review", review_id)
     if not review:
         abort(404)
